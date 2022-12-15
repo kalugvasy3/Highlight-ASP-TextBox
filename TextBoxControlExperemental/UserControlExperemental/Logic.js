@@ -11,22 +11,33 @@ function txtUp(self) {
     var conv = "";
     var ch = "";
     var strdiv = ""
+    const pattern = /(\r\n|\n|\r|\n\r)/gm;
+
 
     for (i = 0; i < origin.length; i++) {
         ch = origin[i];
         conv = escape(ch);
 
-        if (conv.length > 1 && ch != " ") {
+        if (ch == "!") {
             strdiv += '<span class="yellowbackground">' + ch + '</span>'
         } else {
             if (ch != " ") {
-                strdiv += ch;
+                if (pattern.test(ch)) {
+                    strdiv += "<br>";
+                }
+                else {
+                    strdiv += ch;
+                }
+
             } else {
                 strdiv += "&nbsp;";
             }
         }
 
-        div.innerHTML = strdiv.replace(/(\r\n|\n|\r)/gm, "<br>");
+        strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>");
+        // strdiv = strdiv.substr(strdiv.length - 4);
+
+        div.innerHTML = strdiv;
         txtOnScroll(self)
         //window.scrollY  $(selector).scrollLeft()
     }
@@ -36,6 +47,6 @@ function txtUp(self) {
 //function name must be build dynamicaly
 function txtOnScroll(self) {
     var div = self.parentElement.childNodes[1];
-    div.scrollTop = self.scrollTop;
-    return false;
+    div.scrollTop = self.scrollTop - 12;
+    return true;
 }

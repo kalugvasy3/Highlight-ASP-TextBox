@@ -40,9 +40,10 @@
     }
 
     .scroll {
-        margin: 4px, 4px;
+/*        margin: 4px, 4px;
         padding: 4px;
-        background-color: lightgoldenrodyellow;
+        background-color: lightgoldenrodyellow;*/
+        background-color: white;
         font-family: Consolas;
         word-wrap: break-word;
         font-size: medium;
@@ -112,13 +113,13 @@
     <div id="divCloneTxt" style="resize: none" 
         runat="server" 
         clientidmode="AutoID" 
-        class="whitebackground scroll" >
+        class="whitebackground scroll transparentfont" >
     </div>
 
     <asp:TextBox ID="txtUC" runat="server" 
         
         Style="resize: none"
-        class="absolute transporentbackground transparentfont"
+        class="absolute transporentbackground "
         onkeyup="txtUp(this)"
         onblure="txtUp(this)"
         onscroll = "txtUp(this)"
