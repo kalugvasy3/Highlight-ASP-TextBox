@@ -33,20 +33,20 @@ function txtUp(self) {
                 strdiv += "&nbsp;";
             }
         }
-
+    }
         strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>");
         // strdiv = strdiv.substr(strdiv.length - 4);
 
-        div.innerHTML = strdiv;
-        txtOnScroll(self)
+    div.innerHTML = strdiv + "&nbsp;";
+    txtOnScroll(self);
         //window.scrollY  $(selector).scrollLeft()
-    }
+   
     return false;
 };
 
 //function name must be build dynamicaly
 function txtOnScroll(self) {
     var div = self.parentElement.childNodes[1];
-    div.scrollTop = self.scrollTop - 12;
+    div.scrollTop = self.scrollTop;
     return true;
 }
