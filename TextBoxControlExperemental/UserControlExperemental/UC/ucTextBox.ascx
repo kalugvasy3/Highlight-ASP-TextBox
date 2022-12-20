@@ -32,7 +32,7 @@
         width: 300px;
         height: 20px;
         border: 1px solid #000000;
-        word-wrap: break-word;
+      /*  word-wrap: break-word;*/
         overflow-x: hidden;
         overflow-y: auto;
         text-align: justify;
@@ -41,11 +41,10 @@
 
     .scroll {
 /*        margin: 4px, 4px;
-        padding: 4px;
-        background-color: lightgoldenrodyellow;*/
+        padding: 4px;*/
         background-color: white;
         font-family: Consolas;
-        word-wrap: break-word;
+      /*  word-wrap: break-word;*/
         font-size: medium;
         overflow-x: hidden;
         overflow-y: auto;
@@ -54,59 +53,69 @@
     }
 </style>
 
-<script src="Logic.js"></script>
+<%--<script src="Logic.js"></script>--%>
 
-<%--<script>
+<script>
 
 
-    //function name must be build dynamicaly
-    function txtUp(self) {
 
-        var strtxt = self.value;
-        var div = self.parentElement.childNodes[1];
-        div.innerHTML = "";
-        // alert(self.value);
+//function name must be build dynamicaly
+function txtUp(self) {
 
-        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/escape
+    var strtxt = self.value;
 
-        var origin = strtxt.split("");
-        var conv = "";
-        var ch = "";
-        var strdiv = ""
+    var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt" - jQuary find just the last userControl, not current. 
+    div.innerHTML = "";
 
-        for (i = 0; i < origin.length; i++) {
-            ch = origin[i];
-            conv = escape(ch);
+    var origin = strtxt.split("");
+    var conv = "";
+    var ch = "";
+    var strdiv = ""
+    const pattern = /(\r\n|\n|\r|\n\r)/gm;
 
-            if (conv.length > 1 && ch != " ") {
-                strdiv += '<span class="yellowbackground">' + ch + '</span>'
-            } else {
-                if (ch != " ") {
-                    strdiv += ch;
-                } else {
-                    strdiv += "&nbsp;";
+
+    for (i = 0; i < origin.length; i++) {
+        ch = origin[i];
+        conv = escape(ch);
+
+        if (ch == "!") {
+            strdiv += '<span class="yellowbackground">' + ch + '</span>'
+        } else {
+            if (ch != " ") {
+                if (pattern.test(ch)) {
+                    strdiv += "<br>";
                 }
+                else {
+                    strdiv += ch;
+                }
+
+            } else {
+                strdiv += "&nbsp;";
             }
-
-            div.innerHTML = strdiv.replace(/(\r\n|\n|\r)/gm, "<br>");
-            txtOnScroll(self)
-            //window.scrollY  $(selector).scrollLeft()
         }
-        return false;
-    };
-
-    //function name must be build dynamicaly
-    function txtOnScroll(self) {
-        var div = self.parentElement.childNodes[1];
-        div.scrollTop = self.scrollTop;
-        return false;
     }
+        strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>");
+        // strdiv = strdiv.substr(strdiv.length - 4);
+
+    div.innerHTML = strdiv + "&nbsp;";
+    txtOnScroll(self);
+        //window.scrollY  $(selector).scrollLeft()
+   
+    return false;
+};
+
+//function name must be build dynamicaly
+function txtOnScroll(self) {
+    var div = self.parentElement.childNodes[1];
+    div.scrollTop = self.scrollTop;
+    div.scrollLeft = self.scrollLeft;
+    return true;
+}
+
+</script>
 
 
-</script>--%>
-
-
-<%--  this is only single line TextBox!!!--%>
+<%-- Do not change sequences "Div"/ "TextBox" - JS using this sequences --%>
 
 <div id="divContainer" class="relative" clientidmode="AutoID" runat="server">
 
@@ -127,7 +136,5 @@
 
         Text="" AutoPostBack="false" >
     </asp:TextBox>
-
-
 
 </div>

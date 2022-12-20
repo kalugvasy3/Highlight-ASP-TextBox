@@ -112,6 +112,12 @@ Public Class ucTextBox
         End Get
         Set(value As TextBoxMode)
             txtUC.TextMode = value
+            If (txtUC.TextMode = TextBoxMode.SingleLine) Then
+                divCloneTxt.Style.Remove("word-wrap")
+            Else
+                divCloneTxt.Style.Remove("word-wrap")
+                divCloneTxt.Style.Add("word-wrap", "break-word")
+            End If
         End Set
     End Property
 
