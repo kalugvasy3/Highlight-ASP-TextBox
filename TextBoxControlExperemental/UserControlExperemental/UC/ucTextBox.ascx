@@ -133,7 +133,7 @@ function txtOnScroll(self) {
         onblure="txtUp(this)"
         onscroll = "txtUp(this)"
         onchange = "txtUp(this)"
-
+        autocomplete="off"
         Text="" AutoPostBack="false" >
     </asp:TextBox>
 
