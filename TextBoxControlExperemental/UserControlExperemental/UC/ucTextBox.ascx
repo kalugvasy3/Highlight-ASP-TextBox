@@ -53,13 +53,10 @@
     }
 </style>
 
-<%--<script src="Logic.js"></script>--%>
+<script src="Logic.js"></script>
 
-<script>
+<%--<script>
 
-
-
-//function name must be build dynamicaly
 function txtUp(self) {
 
     var strtxt = self.value;
@@ -70,7 +67,8 @@ function txtUp(self) {
     var origin = strtxt.split("");
     var conv = "";
     var ch = "";
-    var strdiv = ""
+    var strdiv = "";
+    var error = false;
     const pattern = /(\r\n|\n|\r|\n\r)/gm;
 
 
@@ -79,7 +77,8 @@ function txtUp(self) {
         conv = escape(ch);
 
         if (ch == "!") {
-            strdiv += '<span class="yellowbackground">' + ch + '</span>'
+            strdiv += '<span class="yellowbackground">' + ch + '</span>';
+            error = true;
         } else {
             if (ch != " ") {
                 if (pattern.test(ch)) {
@@ -94,17 +93,16 @@ function txtUp(self) {
             }
         }
     }
-        strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>");
-        // strdiv = strdiv.substr(strdiv.length - 4);
+    strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>");
+    // strdiv = strdiv.substr(strdiv.length - 4);
 
     div.innerHTML = strdiv + "&nbsp;";
     txtOnScroll(self);
-        //window.scrollY  $(selector).scrollLeft()
-   
-    return false;
+    //window.scrollY  $(selector).scrollLeft()
+
+    return error;
 };
 
-//function name must be build dynamicaly
 function txtOnScroll(self) {
     var div = self.parentElement.childNodes[1];
     div.scrollTop = self.scrollTop;
@@ -112,29 +110,40 @@ function txtOnScroll(self) {
     return true;
 }
 
-</script>
+function txtOnBlure(self); {
+    txtUp(self);
+    //if (txtUp(self)) {
+    //    alert('Please fix an error(s)! \nAll highlighted charts \must be replaced/deleted!');
+    //    self.focus();
+    //}
+    return true;
+}
+
+</script>--%>
 
 
 <%-- Do not change sequences "Div"/ "TextBox" - JS using this sequences --%>
 
 <div id="divContainer" class="relative" clientidmode="AutoID" runat="server">
 
-    <div id="divCloneTxt" style="resize: none" 
-        runat="server" 
-        clientidmode="AutoID" 
-        class="whitebackground scroll transparentfont" >
+    <div id="divCloneTxt" style="resize: none"
+        runat="server"
+        clientidmode="AutoID"
+        class="whitebackground scroll transparentfont">
     </div>
 
-    <asp:TextBox ID="txtUC" runat="server" 
-        
+    <asp:TextBox ID="txtUC" runat="server"
         Style="resize: none"
         class="absolute transporentbackground "
-        onkeyup="txtUp(this)"
-        onblure="txtUp(this)"
-        onscroll = "txtUp(this)"
-        onchange = "txtUp(this)"
+        
+        onpaste="txtPaste(this)"
+        onkeyup="txtUp(this)"       
+        onscroll="txtUp(this)"
+        onchange="txtOnBlure(this)"
+        
+
         autocomplete="off"
-        Text="" AutoPostBack="false" >
+        Text="" AutoPostBack="false">
     </asp:TextBox>
 
 </div>
