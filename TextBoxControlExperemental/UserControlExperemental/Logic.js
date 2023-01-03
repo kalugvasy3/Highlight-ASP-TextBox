@@ -1,19 +1,10 @@
 ﻿
-//function name must be build dynamicaly
-
-function escapeSpecialChars(str) {
-    return str
-        .replace(/t/g, "&Tab;")
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;");
-}
-
-
-
 function txtUp(self) {
 
     var strtxt = self.value;
+
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+    strtxt = strtxt.normalize('NFC');
 
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt" - jQuary find just the last userControl, not current. 
     div.innerHTML = "";
@@ -27,9 +18,7 @@ function txtUp(self) {
 
 
     for (i = 0; i < origin.length; i++) {
-        ch = escapeSpecialChars(origin[i]);
-        // conv = escape(ch);
-
+        ch = origin[i];
         if (ch == "!") {
             strdiv += '<span class="yellowbackground">' + ch + '</span>';
             error = true;
@@ -41,25 +30,21 @@ function txtUp(self) {
                 else {
                     strdiv += ch;
                 }
-
             } else {
                 strdiv += "&nbsp;";
             }
         }
     }
     strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>");
-    // strdiv = strdiv.substr(strdiv.length - 4);
 
     div.innerHTML = strdiv + "&nbsp;";
     txtOnScroll(self);
-    //window.scrollY  $(selector).scrollLeft()
 
     return error;
 }
 
-//function name must be build dynamicaly
 function txtOnScroll(self) {
-    var div = self.parentElement.childNodes[1];
+    var div = self.parentElement.childNodes[1];// name must be build dynamicaly
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
     return true;
@@ -76,13 +61,12 @@ function txtOnBlure(self) {
 
 function txtPaste(self) {
     var div = self.parentElement.childNodes[1];
-    div.style.fontFamily = "Consolas";
-    self.style.fontFamily = "Consolas";
 
-    div.style.fontSize = "medium";
-    self.style.fontSize = "medium";
-
-    txtOnBlure(self);
+    setTimeout(function () {
+        div.style.fontFamily = self.style.fontFamily;
+        div.style.fontSize = self.style.fontSize;
+        txtOnBlure(self);
+    }, 0);
     return true;
 }
 
