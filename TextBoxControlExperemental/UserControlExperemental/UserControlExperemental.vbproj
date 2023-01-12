@@ -109,7 +109,7 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Logic.css" />
-    <Content Include="Logic1.js" />
+    <Content Include="Logic.js" />
     <Content Include="UC\ucTextBox.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>

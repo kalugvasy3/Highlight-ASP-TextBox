@@ -20,10 +20,10 @@
         <uc1:ucTextBox  ID="ucTextBox" runat="server"  TextMode="SingleLine" Width="350" />   
         <br /> <br />
 
-        <uc1:ucTextBox  ID="ucTextBox3" runat="server" TextMode="MultiLine" Width="700"  Height="70" />
+        <uc1:ucTextBox  ID="ucTextBox3" runat="server" TextMode="MultiLine" Width="700"  Height="150" />
 
         <br /> <br />
-        <uc1:ucTextBox  ID="ucTextBox1" runat="server" TextMode="MultiLine" Width="700"  Height="70" />
+        <uc1:ucTextBox  ID="ucTextBox1" runat="server" TextMode="MultiLine" Width="700"  Height="150" />
         <br /> <br /> 
 
     <div>
@@ -32,3 +32,4 @@
     </form>
 </body>
 </html>
+`
