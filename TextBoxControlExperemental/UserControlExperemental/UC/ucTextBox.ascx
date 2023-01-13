@@ -31,9 +31,8 @@
         left: 0;
         border: 1px solid #000000;
         white-space: nowrap;
-        /*word-wrap: break-word;*/
         word-wrap: keep-all;
-        overflow-x: hidden;
+        overflow-x: auto;
         overflow-y: auto;
         text-align: left;
         cursor: text;
@@ -48,7 +47,7 @@
         word-wrap: keep-all;
         font-size: medium;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: hidden;
         text-align: left;
         cursor: none;
     }
@@ -153,7 +152,7 @@
         onpaste="txtPaste(this)"
         onkeyup="txtUp(this)"       
         onscroll="txtOnScroll(this)"
-        onchange="txtOnBlure(this)"
+        onblur="txtOnBlur(this)"
         
 
         autocomplete="off"
