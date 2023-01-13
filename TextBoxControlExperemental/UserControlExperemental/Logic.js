@@ -51,8 +51,11 @@ function txtOnScroll(self) {
 
 function txtOnBlur(self) {
     if (txtUp(self)) {
-        //alert(' Please fix an error(s)! \n All highlighted charts must be replaced/deleted!')
-     setInterval(self.focus(), 1);
+        if (document.activeElement == document.body) {
+            alert(' Please fix an error(s)! \n All highlighted charts must be replaced/deleted!');
+            self.focus();
+            return false;
+        }
     }
     return true;
 }

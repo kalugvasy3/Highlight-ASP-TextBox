@@ -40,7 +40,7 @@
 
     .scroll {
 /*        margin: 4px, 4px;
-        padding: 4px;*/
+        padding: 4px;*/        
         background-color: white;
         font-family: Consolas;
         white-space: nowrap;        
@@ -153,10 +153,9 @@
         onkeyup="txtUp(this)"       
         onscroll="txtOnScroll(this)"
         onblur="txtOnBlur(this)"
-        
 
         autocomplete="off"
-        Text="" AutoPostBack="false">
+        Text="" AutoPostBack="false" >
     </asp:TextBox>
 
 </div>
