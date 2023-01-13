@@ -153,7 +153,7 @@
         onkeyup="txtUp(this)"       
         onscroll="txtOnScroll(this)"
         onblur="txtOnBlur(this)"
-
+      
         autocomplete="off"
         Text="" AutoPostBack="false" >
     </asp:TextBox>

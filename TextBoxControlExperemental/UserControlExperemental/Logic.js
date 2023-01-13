@@ -8,7 +8,7 @@ function txtUp(self) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
     strtxt = strtxt.normalize('NFKC');
 
-    var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt" - jQuary find just the last userControl, not current. 
+    var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
     div.innerHTML = "";
 
     var origin = strtxt.split("");
@@ -23,6 +23,7 @@ function txtUp(self) {
         {
             ch = " "
         }
+
         if (ch == "!") //wrong characters
         {
             strdiv += '<span class="yellowbackground">' + ch + '</span>';
