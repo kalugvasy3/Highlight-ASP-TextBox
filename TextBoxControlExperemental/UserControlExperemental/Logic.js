@@ -41,8 +41,8 @@ function txtUp(self) {
     }
     strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>"); // replace all new line chars
 
-    setInterval(div.innerHTML = strdiv + "&nbsp;", 1);
-    setInterval(txtOnScroll(self),10);
+    div.innerHTML = strdiv + "&nbsp;";
+    txtOnScroll(self);
     // requered Scroll after enter char ... 
     return error;
 }
