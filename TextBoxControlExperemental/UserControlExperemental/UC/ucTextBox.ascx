@@ -137,6 +137,7 @@
 
 <%-- Do not change sequences "Div"/ "TextBox" - JS using this sequences --%>
 
+
 <div id="divContainer" class="relative" clientidmode="AutoID" runat="server">
 
     <div id="divCloneTxt" style="resize: none"
@@ -148,15 +149,15 @@
     <asp:TextBox ID="txtUC" runat="server"
         Style="resize: none"
         class="absolute transporentbackground "
-        
         onpaste="txtPaste(this)"
-        onkeyup="txtUp(this)"       
+        onkeydown="txtUp(this)"
+        onkeyup="txtUp(this)"
         onscroll="txtOnScroll(this)"
         onblur="txtOnBlur(this)"
-        oncut="txtPaste(this)"
-      
+        oncut="txtUp(this)"
         autocomplete="off"
-        Text="" AutoPostBack="false" >
+        Text="" AutoPostBack="false">
     </asp:TextBox>
 
 </div>
+

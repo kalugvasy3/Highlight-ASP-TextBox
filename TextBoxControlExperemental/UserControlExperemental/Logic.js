@@ -8,7 +8,6 @@ function txtUp(self) {
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
     //strtxt = strtxt.normalize('NFC'); //"NFC"  NFKC
-    //setInterval(self.value = strtxt, 0);
 
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
     div.innerHTML = "";
@@ -42,6 +41,7 @@ function txtUp(self) {
     strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br/>"); // replace all new line chars
 
     div.innerHTML = strdiv + "&nbsp;";
+    self.value = str;
     txtOnScroll(self);
     // requered Scroll after enter char ... 
     return error;
@@ -64,7 +64,7 @@ function txtOnScroll(self) {
 }
 
 function txtOnBlur(self) {
-    if (txtUp(self)) {
+    if (txtUp(self, self.value)) {
         if (document.activeElement == document.body) {
             alert(' Please fix an error(s)! \n All highlighted charts must be replaced/deleted!');
             self.focus();
@@ -76,11 +76,11 @@ function txtOnBlur(self) {
 
 
 function txtPaste(self) {
-    var div = self.parentElement.childNodes[1];
-    div.style.fontFamily = self.style.fontFamily;
-    div.style.fontSize = self.style.fontSize;
+    //var strInsert = (event.clipboardData || window.clipboardData).getData('text');
+    //var strCurrent = self.value;
+    //var curPos = self.selectionStart;
+    //var strOut = strCurrent.slice(0, curPos) + strInsert + strCurrent.slice(curPos);
 
-    //self.value = self.value + (event.clipboardData || window.clipboardData).getData('text');
     txtUp(self);
 
     return false;
@@ -89,8 +89,7 @@ function txtPaste(self) {
 
 function replaceSpecialChars(self) {
 
-    var str = self.value
-
+    str = self.value;
     str = str.replace('&', ' and ');
     str = str.replace('<', ' less than ');
     str = str.replace('>', ' greater than ');
@@ -163,8 +162,6 @@ function replaceSpecialChars(self) {
     str = str.replace(/\t/g, '    '); // all TAB replace with 4 spaces.
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-    //str = str.normalize('NFC'); //"NFC"  NFKC
-
     self.value = str.normalize("NFC");
 }
 
