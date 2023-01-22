@@ -149,10 +149,11 @@
         Style="resize: none"
         class="absolute transporentbackground "
         
-        onpaste="txtUp(this)"
+        onpaste="txtPaste(this)"
         onkeyup="txtUp(this)"       
         onscroll="txtOnScroll(this)"
         onblur="txtOnBlur(this)"
+        oncut="txtPaste(this)"
       
         autocomplete="off"
         Text="" AutoPostBack="false" >

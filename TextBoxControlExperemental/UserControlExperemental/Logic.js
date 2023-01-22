@@ -39,12 +39,21 @@ function txtUp(self) {
             }
         }
     }
-    strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br>"); // replace all new line chars
+    strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br/>"); // replace all new line chars
 
     div.innerHTML = strdiv + "&nbsp;";
     txtOnScroll(self);
     // requered Scroll after enter char ... 
     return error;
+}
+
+
+function isCharNotValid(ch) {
+
+    var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/g;
+    var chOut = ch.replace(regex, '*');
+    var blnOut = ch != chOut;
+    return blnOut;
 }
 
 function txtOnScroll(self) {
@@ -65,21 +74,18 @@ function txtOnBlur(self) {
     return true;
 }
 
-//function txtPaste(self) {
-//    var div = self.parentElement.childNodes[1];
-//    div.style.fontFamily = self.style.fontFamily;
-//    div.style.fontSize = self.style.fontSize;
 
-//    txtUp(self);
+function txtPaste(self) {
+    var div = self.parentElement.childNodes[1];
+    div.style.fontFamily = self.style.fontFamily;
+    div.style.fontSize = self.style.fontSize;
 
-//    return true;
-//}
+    //self.value = self.value + (event.clipboardData || window.clipboardData).getData('text');
+    txtUp(self);
 
-//function RemoveSpecialChar(self) {
-//    if (self.value != '' && self.value.match(/^[\w ]+$/) == null) {
-//        self.value = self.value.replace(/[\W]/g, '');
-//    }
-//}
+    return false;
+}
+
 
 function replaceSpecialChars(self) {
 
@@ -98,8 +104,8 @@ function replaceSpecialChars(self) {
     regex = /é|ê|ë|è|ȅ/g;
     str = str.replace(regex, 'e');
 
-    regex = /ĉ/g;
-    str = str.replace(regex, 'c');
+    //regex = /ĉ/g;
+    //str = str.replace(regex, 'c');
 
     regex = /É|Ê|Ë|È|Ẽ/g;
     str = str.replace(regex, 'E');
@@ -134,8 +140,8 @@ function replaceSpecialChars(self) {
     regex = /Ñ|Ṅ|Ӥ/g;
     str = str.replace(regex, 'N');
 
-    regex = /€|₡|ç|ß|¬|Ç|¦|ø|Ø|æ|Æ|®|£|¥|©|™|¨|ꬿ|ꟹ|℅/g;
-    str = str.replace(regex, ' ');
+    //regex = /€|₡|ç|ß|¬|Ç|¦|ø|Ø|æ|Æ|®|£|¥|©|™|¨|ꬿ|ꟹ|℅/g;
+    //str = str.replace(regex, ' ');
 
     str = str.replace('^', ''); // It must be empty.
 
@@ -152,8 +158,8 @@ function replaceSpecialChars(self) {
     str = str.replace('⅔', ' 2/3 ');
     str = str.replace('¾', ' 3/4 ');
     str = str.replace('�', ' ');
-    str = str.replace('♀', ' ');
-    str = str.replace('–', '-');
+    //str = str.replace('♀', ' ');
+    //str = str.replace('–', '-');
     str = str.replace(/\t/g, '    '); // all TAB replace with 4 spaces.
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
@@ -162,12 +168,5 @@ function replaceSpecialChars(self) {
     self.value = str.normalize("NFC");
 }
 
-function isCharNotValid(ch) {
-
-    var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/g;
-    var chOut = ch.replace(regex, '*');
-    var blnOut = ch != chOut;
-    return blnOut;
-}
 
 
