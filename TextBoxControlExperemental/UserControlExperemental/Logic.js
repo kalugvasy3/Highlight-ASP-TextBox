@@ -1,4 +1,6 @@
 ﻿
+
+
 function txtUp(self) {
 
     replaceSpecialChars(self);
@@ -42,7 +44,10 @@ function txtUp(self) {
 
     div.innerHTML = strdiv + "&nbsp;";
     self.value = str;
-    txtOnScroll(self);
+
+    div.scrollTop = self.scrollTop;
+    div.scrollLeft = self.scrollLeft;
+
     // requered Scroll after enter char ... 
     return error;
 }
@@ -60,6 +65,7 @@ function txtOnScroll(self) {
     var div = self.parentElement.childNodes[1];// name must be build dynamicaly
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
+    txtUp(self);
     return true;
 }
 
@@ -76,12 +82,18 @@ function txtOnBlur(self) {
 
 
 function txtPaste(self) {
-    //var strInsert = (event.clipboardData || window.clipboardData).getData('text');
-    //var strCurrent = self.value;
-    //var curPos = self.selectionStart;
-    //var strOut = strCurrent.slice(0, curPos) + strInsert + strCurrent.slice(curPos);
+    //https://javascript.info/selection-range
+
+    let paste = (event.clipboardData || window.clipboardData).getData('text');
+
+    self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
+    self.focus();
 
     txtUp(self);
+
+    var div = self.parentElement.childNodes[1];// name must be build dynamicaly
+    div.scrollTop = self.scrollTop;
+    div.scrollLeft = self.scrollLeft;
 
     return false;
 }

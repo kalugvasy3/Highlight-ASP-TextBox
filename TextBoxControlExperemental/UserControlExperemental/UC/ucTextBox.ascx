@@ -2,7 +2,7 @@
 
 <style type="text/css">
     .transparentfont {
-        color: red;
+        color: white;
     }
 
     .yellowbackground {
@@ -57,7 +57,6 @@
 
 <script>
 
-
 //function txtUp(self) {
 
 //    var strtxt = self.value;
@@ -65,7 +64,7 @@
 //    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
 //    strtxt = strtxt.normalize('NFC');
 
-//    var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt" - jQuary find just the last userControl, not current. 
+//    var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt" - jQuary find just the last userControl, not current.
 //    div.innerHTML = "";
 
 //    var origin = strtxt.split("");
@@ -158,6 +157,23 @@
         autocomplete="off"
         Text="" AutoPostBack="false">
     </asp:TextBox>
+
+
+
+
+    <script>
+        // We must disable "paste" default logic.
+        window.onload = function () {
+            document.addEventListener('paste', function (e) {
+               // console.log("paste handler");
+                var s = e.clipboardData.getData('text/html').replace("this", "that")
+                document.execCommand("insertHTML", false, s);
+                e.preventDefault();
+            });
+        }
+         //https://stackoverflow.com/questions/46645587/how-to-create-a-paste-event-after-preventdefault
+
+    </script>
 
 </div>
 
