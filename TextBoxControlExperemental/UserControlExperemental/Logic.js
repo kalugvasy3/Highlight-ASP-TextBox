@@ -42,7 +42,7 @@ function txtUp(self) {
     }
     strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br/>"); // replace all new line chars
 
-    div.innerHTML = strdiv + "&nbsp;";
+    div.innerHTML = strdiv + "<br/><br/>";
     self.value = str;
 
     div.scrollTop = self.scrollTop;

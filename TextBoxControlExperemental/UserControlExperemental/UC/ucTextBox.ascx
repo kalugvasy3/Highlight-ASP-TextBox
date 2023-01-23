@@ -2,7 +2,7 @@
 
 <style type="text/css">
     .transparentfont {
-        color: white;
+        color: red;
     }
 
     .yellowbackground {
