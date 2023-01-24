@@ -50,7 +50,7 @@ function txtUp(self) {
         div.innerHTML = strdiv;
     }
 
-    self.value = strtxt;
+   // self.value = strtxt;
 
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
