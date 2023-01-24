@@ -3,47 +3,54 @@
 
 function txtUp(self) {
 
-    replaceSpecialChars(self);
+    // replaceSpecialChars(self);
 
     var strtxt = self.value;
-    if (self.clientHeight <= 25) { strtxt.replace(/(\r\n|\n|\r|\n\r)/gm, " ") };
+    if (self.clientHeight <= 25)
+    {
+        strtxt.replace(/(\r\n|\n|\r|\n\r)/gm, ' ');
+    }
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
     //strtxt = strtxt.normalize('NFC'); //"NFC"  NFKC
 
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
-    div.innerHTML = "";
+    div.innerHTML = '';
 
-    var origin = strtxt.split("");
-    var ch = "";
-    var strdiv = "";
+    var origin = strtxt.split('');
+    var ch = '';
+    var strdiv = '';
     var error = false;
 
     for (i = 0; i < origin.length; i++) {
         ch = origin[i];
+        var ch1 = ch;
+        if (ch == '>' || ch == '<' || ch == '&' || ch == '/') // control characters
+        {
+            ch1 = '*'
+        }
+
         if (isCharNotValid(ch)) //wrong characters
         {
-            var ch1 = ch;
-            if (ch == ">" || ch == "<" || ch == "&" || ch == "/") // control characters
-            {
-                ch1 = "*"
-            }
-
             strdiv += '<span class="yellowbackground">' + ch1 + '</span>';
             error = true;
         }
         else {
-            if (ch != " ") {
-                strdiv += ch;
+            if (ch != ' ') {
+                strdiv += ch1;
             } else {
-                strdiv += "&nbsp;";
+                strdiv += '&nbsp;';
             }
         }
     }
-    strdiv = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, "<br/>"); // replace all new line chars
 
-    div.innerHTML = strdiv + "<br/><br/>";
-    self.value = str;
+    if (self.clientHeight > 25) {
+        div.innerHTML = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, '<br/>') + '<br/><br/>';
+    } else {
+        div.innerHTML = strdiv;
+    }
+
+    self.value = strtxt;
 
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
@@ -70,7 +77,7 @@ function txtOnScroll(self) {
 }
 
 function txtOnBlur(self) {
-    if (txtUp(self, self.value)) {
+    if (txtUp(self)) {
         if (document.activeElement == document.body) {
             alert(' Please fix an error(s)! \n All highlighted charts must be replaced/deleted!');
             self.focus();
