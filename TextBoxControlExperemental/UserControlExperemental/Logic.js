@@ -1,18 +1,13 @@
-﻿
-
-
-function txtUp(self) {
+﻿function txtUp(self) {
     replaceCommandChars(self);
-    // replaceSpecialChars(self);
+    //replaceSpecialChars(self);
 
     var strtxt = self.value;
+    
     if (self.clientHeight <= 25)
     {
-        strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
+       strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
     }
-
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-    //strtxt = strtxt.normalize('NFC'); //"NFC"  NFKC
 
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
     div.innerHTML = '';
@@ -50,21 +45,17 @@ function txtUp(self) {
         div.innerHTML = strdiv;
     }
 
-   // self.value = strtxt; // do not do that ...
-
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
 
-    // requered Scroll after enter char ... 
     return error;
 }
-
 
 function isCharNotValid(ch) {
 
     var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/ig;
     var chOut = ch.replaceAll(regex, '*');
-    var blnOut = ch != chOut;
+    var blnOut = ch != chOut || ch =='>' || ch == '<';
     return blnOut;
 }
 
@@ -73,7 +64,7 @@ function txtOnScroll(self) {
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
     txtUp(self);
-    return true;
+    return false;
 }
 
 function txtOnBlur(self) {
@@ -87,19 +78,13 @@ function txtOnBlur(self) {
     return true;
 }
 
-
 function txtPaste(self) {
     //https://javascript.info/selection-range
 
-    //let paste = (event.clipboardData || window.clipboardData).getData('text');
-    let paste = event.clipboardData.getData('text');
+    let paste = (event.clipboardData || window.clipboardData).getData('text');
     self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
     txtUp(self);
-
-    //var div = self.parentElement.childNodes[1];// name must be build dynamicaly
-    //div.scrollTop = self.scrollTop;
-    //div.scrollLeft = self.scrollLeft;
-
+    event.preventDefault();
     return true;
 }
 
@@ -107,8 +92,9 @@ function replaceCommandChars(self) {
     str = self.value;
     const regex = /\t/ig;
     str = str.replaceAll(regex, '    ');
+    self.value = str.normalize("NFC").trimEnd();
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-    self.value = str.normalize("NFC");
+    return false;
 }
 
 function replaceSpecialChars(self) {
@@ -125,7 +111,7 @@ function replaceSpecialChars(self) {
     str = str.replaceAll(regex, 'A');
 
     regex = /é|ê|ë|è|ȅ/ig;
-    str = str.replacev(regex, 'e');
+    str = str.replaceAll(regex, 'e');
 
     //regex = /ĉ/ig;
     //str = str.replaceAll(regex, 'c');
@@ -184,9 +170,7 @@ function replaceSpecialChars(self) {
     //str = str.replaceAll('♀', ' ');
     //str = str.replacev('–', '-');
 
-
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-    self.value = str.normalize("NFC");
+    return false;
 }
 
 

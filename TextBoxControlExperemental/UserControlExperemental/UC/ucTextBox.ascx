@@ -2,7 +2,7 @@
 
 <style type="text/css">
     .transparentfont {
-        color: transparent;
+        color: red;
     }
 
     .yellowbackground {
@@ -163,14 +163,14 @@
 
     <script>
         // We must disable "paste" default logic.
-        window.onload = function () {
-            document.addEventListener('paste', function (e) {
-               // console.log("paste handler");
-                //var s = e.clipboardData.getData('text/html').replace("this", "that")
-                //document.execCommand("insertHTML", false, s);
-                e.preventDefault();
-            });
-        }
+        //window.onload = function () {
+        //    document.addEventListener('paste', function (e) {
+        //       // console.log("paste handler");
+        //        //var s = e.clipboardData.getData('text/html').replace("this", "that")
+        //        //document.execCommand("insertHTML", false, s);
+        //        e.preventDefault();
+        //    });
+        //}
          //https://stackoverflow.com/questions/46645587/how-to-create-a-paste-event-after-preventdefault
 
     </script>
