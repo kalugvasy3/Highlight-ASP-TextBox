@@ -148,7 +148,7 @@
     <asp:TextBox ID="txtUC" runat="server"
         Style="resize: none"
         class="absolute transporentbackground "
-        onpaste="txtPaste(this)"
+        onpaste="setTimeout(txtPaste(this))"
         onkeydown="txtUp(this)"
         onkeyup="txtUp(this)"
         onscroll="txtOnScroll(this)"
@@ -166,8 +166,8 @@
         window.onload = function () {
             document.addEventListener('paste', function (e) {
                // console.log("paste handler");
-                var s = e.clipboardData.getData('text/html').replace("this", "that")
-                document.execCommand("insertHTML", false, s);
+                //var s = e.clipboardData.getData('text/html').replace("this", "that")
+                //document.execCommand("insertHTML", false, s);
                 e.preventDefault();
             });
         }

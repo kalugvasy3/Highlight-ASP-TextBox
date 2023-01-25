@@ -2,13 +2,13 @@
 
 
 function txtUp(self) {
-
+    replaceCommandChars(self);
     // replaceSpecialChars(self);
 
     var strtxt = self.value;
     if (self.clientHeight <= 25)
     {
-        strtxt.replace(/(\r\n|\n|\r|\n\r)/gm, ' ');
+        strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
@@ -45,7 +45,7 @@ function txtUp(self) {
     }
 
     if (self.clientHeight > 25) {
-        div.innerHTML = strdiv.replace(/(\r\n|\n|\r|\n\r)/gm, '<br/>') + '<br/><br/>';
+        div.innerHTML = strdiv.replaceAll(/(\r\n|\n|\r|\n\r)/ig, '<br/>') + '<br/><br/>';
     } else {
         div.innerHTML = strdiv;
     }
@@ -62,8 +62,8 @@ function txtUp(self) {
 
 function isCharNotValid(ch) {
 
-    var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/g;
-    var chOut = ch.replace(regex, '*');
+    var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/ig;
+    var chOut = ch.replaceAll(regex, '*');
     var blnOut = ch != chOut;
     return blnOut;
 }
@@ -91,94 +91,99 @@ function txtOnBlur(self) {
 function txtPaste(self) {
     //https://javascript.info/selection-range
 
-    let paste = (event.clipboardData || window.clipboardData).getData('text');
-
+    //let paste = (event.clipboardData || window.clipboardData).getData('text');
+    let paste = event.clipboardData.getData('text');
     self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
-    self.focus();
-
     txtUp(self);
 
-    var div = self.parentElement.childNodes[1];// name must be build dynamicaly
-    div.scrollTop = self.scrollTop;
-    div.scrollLeft = self.scrollLeft;
+    //var div = self.parentElement.childNodes[1];// name must be build dynamicaly
+    //div.scrollTop = self.scrollTop;
+    //div.scrollLeft = self.scrollLeft;
 
-    return false;
+    return true;
 }
 
+function replaceCommandChars(self) {
+    str = self.value;
+    const regex = /\t/ig;
+    str = str.replaceAll(regex, '    ');
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+    self.value = str.normalize("NFC");
+}
 
 function replaceSpecialChars(self) {
 
     str = self.value;
-    str = str.replace('&', ' and ');
-    str = str.replace('<', ' less than ');
-    str = str.replace('>', ' greater than ');
+    str = str.replaceAll('&', ' and ');
+    str = str.replaceAll('<', ' less than ');
+    str = str.replaceAll('>', ' greater than ');
 
-    var regex = /â|ȁ|ä|à|á|ã|å|ă|ꜳ/g;  // "/g" meanse replace all char from list left, do not stop after replacing first char...see below link...
-    str = str.replace(regex, 'a');
+    var regex = /â|ȁ|ä|à|á|ã|å|ă|ꜳ/ig;  // "/g" meanse replace all char from list left, do not stop after replacing first char...see below link...
+    str = str.replaceAll(regex, 'a');
 
-    regex = /Â|Ä|À|Á|Ã|Å|Ă/g;
-    str = str.replace(regex, 'A');
+    regex = /Â|Ä|À|Á|Ã|Å|Ă/ig;
+    str = str.replaceAll(regex, 'A');
 
-    regex = /é|ê|ë|è|ȅ/g;
-    str = str.replace(regex, 'e');
+    regex = /é|ê|ë|è|ȅ/ig;
+    str = str.replacev(regex, 'e');
 
-    //regex = /ĉ/g;
-    //str = str.replace(regex, 'c');
+    //regex = /ĉ/ig;
+    //str = str.replaceAll(regex, 'c');
 
-    regex = /É|Ê|Ë|È|Ẽ/g;
-    str = str.replace(regex, 'E');
+    regex = /É|Ê|Ë|È|Ẽ/ig;
+    str = str.replaceAll(regex, 'E');
 
-    regex = /í|î|ï|ì|ἴ|ἶ|ἳ/g;
-    str = str.replace(regex, 'i');
+    regex = /í|î|ï|ì|ἴ|ἶ|ἳ/ig;
+    str = str.replaceAll(regex, 'i');
 
-    regex = /Í|Î|Ï|Ì/g;
-    str = str.replace(regex, 'I');
+    regex = /Í|Î|Ï|Ì/ig;
+    str = str.replaceAll(regex, 'I');
 
-    regex = /ô|ö|ò|ó|õ/g;
-    str = str.replace(regex, 'o');
+    regex = /ô|ö|ò|ó|õ/ig;
+    str = str.replaceAll(regex, 'o');
 
-    regex = /Ô|Ö|Ò|Ó|Õ/g;
-    str = str.replace(regex, 'O');
+    regex = /Ô|Ö|Ò|Ó|Õ/ig;
+    str = str.replaceAll(regex, 'O');
 
-    regex = /û|ü|ù|ú/g;
-    str = str.replace(regex, 'u');
+    regex = /û|ü|ù|ú/ig;
+    str = str.replaceAll(regex, 'u');
 
-    regex = /Û|Ü|Ù|Ú/g;
-    str = str.replace(regex, 'U');
+    regex = /Û|Ü|Ù|Ú/ig;
+    str = str.replaceAll(regex, 'U');
 
-    regex = /ÿ|ý|ӱ/g;
-    str = str.replace(regex, 'y');
+    regex = /ÿ|ý|ӱ/ig;
+    str = str.replaceAll(regex, 'y');
 
-    regex = /Ÿ|Ý/g;
-    str = str.replace(regex, 'Y');
+    regex = /Ÿ|Ý/ig;
+    str = str.replaceAll(regex, 'Y');
 
-    regex = /ñ|ῆ/g;
-    str = str.replace(regex, 'n');
+    regex = /ñ|ῆ/ig;
+    str = str.replaceAll(regex, 'n');
 
-    regex = /Ñ|Ṅ|Ӥ/g;
-    str = str.replace(regex, 'N');
+    regex = /Ñ|Ṅ|Ӥ/ig;
+    str = str.replaceAll(regex, 'N');
 
-    //regex = /€|₡|ç|ß|¬|Ç|¦|ø|Ø|æ|Æ|®|£|¥|©|™|¨|ꬿ|ꟹ|℅/g;
-    //str = str.replace(regex, ' ');
+    //regex = /€|₡|ç|ß|¬|Ç|¦|ø|Ø|æ|Æ|®|£|¥|©|™|¨|ꬿ|ꟹ|℅/ig;
+    //str = str.replaceAll(regex, ' ');
 
-    str = str.replace('^', ''); // It must be empty.
+    str = str.replaceAll('^', ''); // It must be empty.
 
-    regex = /¢|\u005C/g;  // ¢ \ 
-    str = str.replace(regex, ' ');
+    regex = /¢|\u005C/ig;  // ¢ \ 
+    str = str.replaceAll(regex, ' ');
 
-    regex = /"|'|´|‘|’|“|”|\u0091|\u0092|\u0093|\u0094|\u005C/g;
-    str = str.replace(regex, '`');
+    regex = /"|'|´|‘|’|“|”|\u0091|\u0092|\u0093|\u0094|\u005C/ig;
+    str = str.replaceAll(regex, '`');
 
 
-    str = str.replace('¼', ' 1/4 ');
-    str = str.replace('½', ' 1/2 ');
-    str = str.replace('⅓', ' 1/3 ');
-    str = str.replace('⅔', ' 2/3 ');
-    str = str.replace('¾', ' 3/4 ');
-    str = str.replace('�', ' ');
-    //str = str.replace('♀', ' ');
-    //str = str.replace('–', '-');
-    str = str.replace(/\t/g, '    '); // all TAB replace with 4 spaces.
+    str = str.replaceAll('¼', ' 1/4 ');
+    str = str.replaceAll('½', ' 1/2 ');
+    str = str.replaceAll('⅓', ' 1/3 ');
+    str = str.replaceAll('⅔', ' 2/3 ');
+    str = str.replaceAll('¾', ' 3/4 ');
+    str = str.replaceAll('�', ' ');
+    //str = str.replaceAll('♀', ' ');
+    //str = str.replacev('–', '-');
+
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
     self.value = str.normalize("NFC");
