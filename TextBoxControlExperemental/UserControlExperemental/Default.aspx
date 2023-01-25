@@ -15,20 +15,30 @@
 </head>
 
 <body>
-    <form id="form1" runat="server" >
 
-        <uc1:ucTextBox  ID="ucTextBox" runat="server"  TextMode="SingleLine" Width="350" />   
-        <br /> <br />
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <uc1:ucTextBox ID="ucTextBox" runat="server" TextMode="SingleLine" Width="350" />
+                <br />
+                <br />
 
-        <uc1:ucTextBox  ID="ucTextBox3" runat="server" TextMode="MultiLine" Width="700"  Height="150" />
+                <uc1:ucTextBox ID="ucTextBox3" AutoPostBack="true" runat="server" TextMode="MultiLine" Width="700" Height="150" />
 
-        <br /> <br />
-        <uc1:ucTextBox  ID="ucTextBox1" runat="server" TextMode="MultiLine" Width="700"  Height="150" />
-        <br /> <br /> 
+                <br />
+                <br />
+                <uc1:ucTextBox ID="ucTextBox1" AutoPostBack="false" runat="server" TextMode="MultiLine" Width="700" Height="150" />
+                <br />
+                <br />
 
-    <div>
-    
-    </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+
+
+        <div>
+        </div>
     </form>
 </body>
 </html>

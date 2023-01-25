@@ -119,14 +119,15 @@ Public Class ucTextBox
         End Set
     End Property
 
-
-    Private _ErrorText As String = ""
-    Public ReadOnly Property ErrorText() As String
+    Public Property AutoPostBack() As Boolean
         Get
-            Return _ErrorText
+            Return txtUC.AutoPostBack
         End Get
-
+        Set(value As Boolean)
+            txtUC.AutoPostBack = value
+        End Set
     End Property
+
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -137,63 +138,6 @@ Public Class ucTextBox
 
     End Sub
 
-    'Protected Sub txtUC_TextChanged(sender As Object, e As EventArgs) Handles txtUC.TextChanged
-
-    '    '  ValidateTextBox()
-
-    'End Sub
-
-
-    'Private Sub ValidateTextBox()
-    '    Dim strBefore As String = txtUC.Text
-    '    divCloneTxt.InnerHtml = ""
-
-    '    Dim strAfter As String = ""
-    '    Dim inputEncoding As Encoding = Encoding.GetEncoding(37) 'Code page 37 is one of the most-used and best-supported EBCDIC code pages.
-
-    '    If strBefore <> "" Then
-    '        Dim byteBeforeArray As Byte() = Encoding.UTF8.GetBytes(strBefore)
-    '        strAfter = inputEncoding.GetString(byteBeforeArray)  'EBCDIC 037
-    '    End If
-
-    '    Dim charsBefore As Char() = strBefore.ToCharArray()
-    '    Dim charsAfter As Char() = strAfter.ToCharArray()
-
-    '    Dim strDiv As String = ""
-    '    Dim strError As String = "replace/update char(s): "
-    '    Dim blnError As Boolean = False
-
-    '    For i As Integer = 0 To charsBefore.Length - 1
-    '        If charsBefore(i) = vbCr Then
-    '            strDiv += "<br />"
-    '            i = i + 1
-    '        ElseIf charsBefore(i) <> charsAfter(i) Then
-    '            strDiv += "<span class=""yellowbackground"">" + charsBefore(i) + "</span>"
-    '            blnError = True
-    '            strError += """" + charsBefore(i) + ""","
-    '        Else
-    '            If charsBefore(i) = " " Then
-    '                strDiv += "&nbsp;"
-    '            Else
-    '                strDiv += charsBefore(i)
-    '            End If
-
-    '        End If
-    '    Next
-
-    '    strError = strError.TrimEnd(",")
-    '    '   divCloneTxt.InnerHtml = strDiv
-
-    '    If blnError Then
-    '        txtUC.ToolTip = strError
-
-    '    Else
-    '        txtUC.ToolTip = ""
-    '    End If
-
-    '    _ErrorText = strError
-
-    'End Sub
 
 
 End Class
