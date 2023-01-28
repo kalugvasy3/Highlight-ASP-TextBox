@@ -72,13 +72,25 @@ Public Class ucTextBox
         End Set
     End Property
 
+    Private _MaxLength As Integer = 2000
 
     Public Property MaxLength() As Integer
         Get
-            Return txtUC.MaxLength
+            Return _MaxLength
         End Get
         Set(value As Integer)
+            _MaxLength = value
             txtUC.MaxLength = value
+        End Set
+    End Property
+
+
+    Public Property Rows() As Integer
+        Get
+            Return txtUC.Rows
+        End Get
+        Set(value As Integer)
+            txtUC.Rows = value
         End Set
     End Property
 

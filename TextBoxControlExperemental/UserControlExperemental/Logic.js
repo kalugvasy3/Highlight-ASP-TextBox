@@ -1,12 +1,28 @@
-﻿function txtUp(self) {
+﻿function replaceSpecialCharsByName(strName) {
+    var self = document.getElementById(strName);
+    txtUp(self);
+}
+
+
+//function txtKeyUp(self) {
+//    //https://javascript.info/selection-range
+
+//    let paste = String.fromCharCode(event.keyCode);;
+//    self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
+//    event.stopPropagation();
+//    event.preventDefault();
+//    return false;
+//}
+
+function txtUp(self) {
+    
     replaceCommandChars(self);
     //replaceSpecialChars(self);
 
     var strtxt = self.value;
-    
-    if (self.clientHeight <= 25)
-    {
-       strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
+
+    if (self.clientHeight <= 25) {
+        strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
     }
 
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
@@ -51,11 +67,48 @@
     return error;
 }
 
+
+function replaceCommandChars(self) {
+    str = self.value;
+    const regex = /\t/ig;
+    str = str.replaceAll(regex, '    ');
+    self.value = str.normalize("NFC").trimEnd();
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+    return false;
+}
+
+// multiline textarea max length
+function txtCounter(self) {
+
+    var maxlimit = self.maxLength
+
+    var strIn = self.value;
+    var strOut = "";
+    var countBytes = 0;
+
+    for (i = 0; i <= strIn.length; i++) {
+
+        if (strIn.charCodeAt(i) < 256) {
+            countBytes += 1;
+        } else {
+            countBytes += 2;
+        }
+
+        if (countBytes <= maxlimit - strOut.split(/\r?\n/).length + 1) {
+            strOut += strIn.charAt(i);
+        } else {
+            self.value = strOut;
+            return false;
+        }
+        return true;
+    }
+}
+
 function isCharNotValid(ch) {
 
     var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/ig;
     var chOut = ch.replaceAll(regex, '*');
-    var blnOut = ch != chOut || ch =='>' || ch == '<';
+    var blnOut = ch != chOut || ch == '>' || ch == '<';
     return blnOut;
 }
 
@@ -88,14 +141,6 @@ function txtPaste(self) {
     return true;
 }
 
-function replaceCommandChars(self) {
-    str = self.value;
-    const regex = /\t/ig;
-    str = str.replaceAll(regex, '    ');
-    self.value = str.normalize("NFC").trimEnd();
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-    return false;
-}
 
 function replaceSpecialChars(self) {
 
@@ -172,6 +217,5 @@ function replaceSpecialChars(self) {
 
     return false;
 }
-
 
 

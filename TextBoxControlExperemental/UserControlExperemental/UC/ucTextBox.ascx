@@ -53,182 +53,213 @@
     }
 </style>
 
-<%--<script src="Logic.js"></script>--%>
+<script src="Logic.js"></script>
 
 <script>
-    function txtUp(self) {
-        replaceCommandChars(self);
-        //replaceSpecialChars(self);
 
-        var strtxt = self.value;
+    //function replaceSpecialCharsByName(strName) {
+    //    var self = document.getElementById(strName);
+    //    txtUp(self);
+    //}
 
-        if (self.clientHeight <= 25) {
-            strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
-        }
+    //function txtUp(self) {
+    //    replaceCommandChars(self);
+    //    //replaceSpecialChars(self);
 
-        var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
-        div.innerHTML = '';
+    //    var strtxt = self.value;
 
-        var origin = strtxt.split('');
-        var ch = '';
-        var strdiv = '';
-        var error = false;
+    //    if (self.clientHeight <= 25) {
+    //        strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
+    //    }
 
-        for (i = 0; i < origin.length; i++) {
-            ch = origin[i];
-            var ch1 = ch;
-            if (ch == '>' || ch == '<' || ch == '&' || ch == '/') // control characters
-            {
-                ch1 = '*'
-            }
+    //    var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
+    //    div.innerHTML = '';
 
-            if (isCharNotValid(ch)) //wrong characters
-            {
-                strdiv += '<span class="yellowbackground">' + ch1 + '</span>';
-                error = true;
-            }
-            else {
-                if (ch != ' ') {
-                    strdiv += ch1;
-                } else {
-                    strdiv += '&nbsp;';
-                }
-            }
-        }
+    //    var origin = strtxt.split('');
+    //    var ch = '';
+    //    var strdiv = '';
+    //    var error = false;
 
-        if (self.clientHeight > 25) {
-            div.innerHTML = strdiv.replaceAll(/(\r\n|\n|\r|\n\r)/ig, '<br/>') + '<br/><br/>';
-        } else {
-            div.innerHTML = strdiv;
-        }
+    //    for (i = 0; i < origin.length; i++) {
+    //        ch = origin[i];
+    //        var ch1 = ch;
+    //        if (ch == '>' || ch == '<' || ch == '&' || ch == '/') // control characters
+    //        {
+    //            ch1 = '*'
+    //        }
 
-        div.scrollTop = self.scrollTop;
-        div.scrollLeft = self.scrollLeft;
+    //        if (isCharNotValid(ch)) //wrong characters
+    //        {
+    //            strdiv += '<span class="yellowbackground">' + ch1 + '</span>';
+    //            error = true;
+    //        }
+    //        else {
+    //            if (ch != ' ') {
+    //                strdiv += ch1;
+    //            } else {
+    //                strdiv += '&nbsp;';
+    //            }
+    //        }
+    //    }
 
-        return error;
-    }
+    //    if (self.clientHeight > 25) {
+    //        div.innerHTML = strdiv.replaceAll(/(\r\n|\n|\r|\n\r)/ig, '<br/>') + '<br/><br/>';
+    //    } else {
+    //        div.innerHTML = strdiv;
+    //    }
 
-    function isCharNotValid(ch) {
+    //    div.scrollTop = self.scrollTop;
+    //    div.scrollLeft = self.scrollLeft;
 
-        var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/ig;
-        var chOut = ch.replaceAll(regex, '*');
-        var blnOut = ch != chOut || ch == '>' || ch == '<';
-        return blnOut;
-    }
+    //    return error;
+    //}
 
-    function txtOnScroll(self) {
-        var div = self.parentElement.childNodes[1];// name must be build dynamicaly
-        div.scrollTop = self.scrollTop;
-        div.scrollLeft = self.scrollLeft;
-        txtUp(self);
-        return false;
-    }
+    //// multiline textarea max length
+    //function textCounter(self) {
 
-    function txtOnBlur(self) {
-        if (txtUp(self)) {
-            if (document.activeElement == document.body) {
-                alert(' Please fix an error(s)! \n All highlighted charts must be replaced/deleted!');
-                self.focus();
-                return false;
-            }
-        }
-        return true;
-    }
+    //    var maxlimit = self.MaxLength
 
-    function txtPaste(self) {
-        //https://javascript.info/selection-range
+    //    var strIn = self.value;
+    //    var strOut = "";
+    //    var countBytes = 0;
 
-        let paste = (event.clipboardData || window.clipboardData).getData('text');
-        self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
-        txtUp(self);
-        event.preventDefault();
-        return true;
-    }
+    //    for (i = 0; i < strIn.length; i++) {
 
-    function replaceCommandChars(self) {
-        str = self.value;
-        const regex = /\t/ig;
-        str = str.replaceAll(regex, '    ');
-        self.value = str.normalize("NFC").trimEnd();
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-        return false;
-    }
+    //        if (strIn.charCodeAt(i) < 256) {
+    //            countBytes += 1;
+    //        } else {
+    //            countBytes += 2;
+    //        }
 
-    function replaceSpecialChars(self) {
+    //        if (countBytes <= maxlimit - strOut.split(/\r?\n/).length + 1) {
+    //            strOut += strIn.charAt(i);
+    //        }
+    //    }
 
-        str = self.value;
-        str = str.replaceAll('&', ' and ');
-        str = str.replaceAll('<', ' less than ');
-        str = str.replaceAll('>', ' greater than ');
+    //    self.value = strOut;
+    //}
 
-        var regex = /â|ȁ|ä|à|á|ã|å|ă|ꜳ/ig;  // "/g" meanse replace all char from list left, do not stop after replacing first char...see below link...
-        str = str.replaceAll(regex, 'a');
+    //function isCharNotValid(ch) {
 
-        regex = /Â|Ä|À|Á|Ã|Å|Ă/ig;
-        str = str.replaceAll(regex, 'A');
+    //    var regex = /[^a-z^A-Z^0-9\^_ ~!@#$?%&*()+-=\{\}\[\]\\|`>\n\s]/ig;
+    //    var chOut = ch.replaceAll(regex, '*');
+    //    var blnOut = ch != chOut || ch == '>' || ch == '<';
+    //    return blnOut;
+    //}
 
-        regex = /é|ê|ë|è|ȅ/ig;
-        str = str.replaceAll(regex, 'e');
+    //function txtOnScroll(self) {
+    //    var div = self.parentElement.childNodes[1];// name must be build dynamicaly
+    //    div.scrollTop = self.scrollTop;
+    //    div.scrollLeft = self.scrollLeft;
+    //    txtUp(self);
+    //    return false;
+    //}
 
-        //regex = /ĉ/ig;
-        //str = str.replaceAll(regex, 'c');
+    //function txtOnBlur(self) {
+    //    if (txtUp(self)) {
+    //        if (document.activeElement == document.body) {
+    //            alert(' Please fix an error(s)! \n All highlighted charts must be replaced/deleted!');
+    //            self.focus();
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
 
-        regex = /É|Ê|Ë|È|Ẽ/ig;
-        str = str.replaceAll(regex, 'E');
+    //function txtPaste(self) {
+    //    //https://javascript.info/selection-range
 
-        regex = /í|î|ï|ì|ἴ|ἶ|ἳ/ig;
-        str = str.replaceAll(regex, 'i');
+    //    let paste = (event.clipboardData || window.clipboardData).getData('text');
+    //    self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
+    //    txtUp(self);
+    //    event.preventDefault();
+    //    return true;
+    //}
 
-        regex = /Í|Î|Ï|Ì/ig;
-        str = str.replaceAll(regex, 'I');
+    //function replaceCommandChars(self) {
+    //    str = self.value;
+    //    const regex = /\t/ig;
+    //    str = str.replaceAll(regex, '    ');
+    //    self.value = str.normalize("NFC").trimEnd();
+    //    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+    //    return false;
+    //}
 
-        regex = /ô|ö|ò|ó|õ/ig;
-        str = str.replaceAll(regex, 'o');
+    //function replaceSpecialChars(self) {
 
-        regex = /Ô|Ö|Ò|Ó|Õ/ig;
-        str = str.replaceAll(regex, 'O');
+    //    str = self.value;
+    //    str = str.replaceAll('&', ' and ');
+    //    str = str.replaceAll('<', ' less than ');
+    //    str = str.replaceAll('>', ' greater than ');
 
-        regex = /û|ü|ù|ú/ig;
-        str = str.replaceAll(regex, 'u');
+    //    var regex = /â|ȁ|ä|à|á|ã|å|ă|ꜳ/ig;  // "/g" meanse replace all char from list left, do not stop after replacing first char...see below link...
+    //    str = str.replaceAll(regex, 'a');
 
-        regex = /Û|Ü|Ù|Ú/ig;
-        str = str.replaceAll(regex, 'U');
+    //    regex = /Â|Ä|À|Á|Ã|Å|Ă/ig;
+    //    str = str.replaceAll(regex, 'A');
 
-        regex = /ÿ|ý|ӱ/ig;
-        str = str.replaceAll(regex, 'y');
+    //    regex = /é|ê|ë|è|ȅ/ig;
+    //    str = str.replaceAll(regex, 'e');
 
-        regex = /Ÿ|Ý/ig;
-        str = str.replaceAll(regex, 'Y');
+    //    //regex = /ĉ/ig;
+    //    //str = str.replaceAll(regex, 'c');
 
-        regex = /ñ|ῆ/ig;
-        str = str.replaceAll(regex, 'n');
+    //    regex = /É|Ê|Ë|È|Ẽ/ig;
+    //    str = str.replaceAll(regex, 'E');
 
-        regex = /Ñ|Ṅ|Ӥ/ig;
-        str = str.replaceAll(regex, 'N');
+    //    regex = /í|î|ï|ì|ἴ|ἶ|ἳ/ig;
+    //    str = str.replaceAll(regex, 'i');
 
-        //regex = /€|₡|ç|ß|¬|Ç|¦|ø|Ø|æ|Æ|®|£|¥|©|™|¨|ꬿ|ꟹ|℅/ig;
-        //str = str.replaceAll(regex, ' ');
+    //    regex = /Í|Î|Ï|Ì/ig;
+    //    str = str.replaceAll(regex, 'I');
 
-        str = str.replaceAll('^', ''); // It must be empty.
+    //    regex = /ô|ö|ò|ó|õ/ig;
+    //    str = str.replaceAll(regex, 'o');
 
-        regex = /¢|\u005C/ig;  // ¢ \ 
-        str = str.replaceAll(regex, ' ');
+    //    regex = /Ô|Ö|Ò|Ó|Õ/ig;
+    //    str = str.replaceAll(regex, 'O');
 
-        regex = /"|'|´|‘|’|“|”|\u0091|\u0092|\u0093|\u0094|\u005C/ig;
-        str = str.replaceAll(regex, '`');
+    //    regex = /û|ü|ù|ú/ig;
+    //    str = str.replaceAll(regex, 'u');
+
+    //    regex = /Û|Ü|Ù|Ú/ig;
+    //    str = str.replaceAll(regex, 'U');
+
+    //    regex = /ÿ|ý|ӱ/ig;
+    //    str = str.replaceAll(regex, 'y');
+
+    //    regex = /Ÿ|Ý/ig;
+    //    str = str.replaceAll(regex, 'Y');
+
+    //    regex = /ñ|ῆ/ig;
+    //    str = str.replaceAll(regex, 'n');
+
+    //    regex = /Ñ|Ṅ|Ӥ/ig;
+    //    str = str.replaceAll(regex, 'N');
+
+    //    //regex = /€|₡|ç|ß|¬|Ç|¦|ø|Ø|æ|Æ|®|£|¥|©|™|¨|ꬿ|ꟹ|℅/ig;
+    //    //str = str.replaceAll(regex, ' ');
+
+    //    str = str.replaceAll('^', ''); // It must be empty.
+
+    //    regex = /¢|\u005C/ig;  // ¢ \ 
+    //    str = str.replaceAll(regex, ' ');
+
+    //    regex = /"|'|´|‘|’|“|”|\u0091|\u0092|\u0093|\u0094|\u005C/ig;
+    //    str = str.replaceAll(regex, '`');
 
 
-        str = str.replaceAll('¼', ' 1/4 ');
-        str = str.replaceAll('½', ' 1/2 ');
-        str = str.replaceAll('⅓', ' 1/3 ');
-        str = str.replaceAll('⅔', ' 2/3 ');
-        str = str.replaceAll('¾', ' 3/4 ');
-        str = str.replaceAll('�', ' ');
-        //str = str.replaceAll('♀', ' ');
-        //str = str.replacev('–', '-');
+    //    str = str.replaceAll('¼', ' 1/4 ');
+    //    str = str.replaceAll('½', ' 1/2 ');
+    //    str = str.replaceAll('⅓', ' 1/3 ');
+    //    str = str.replaceAll('⅔', ' 2/3 ');
+    //    str = str.replaceAll('¾', ' 3/4 ');
+    //    str = str.replaceAll('�', ' ');
+    //    //str = str.replaceAll('♀', ' ');
+    //    //str = str.replacev('–', '-');
 
-        return false;
-    }
+    //    return false;
+    //}
 
 </script>
 

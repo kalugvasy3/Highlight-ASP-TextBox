@@ -18,22 +18,22 @@
 
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:UpdatePanel runat="server">
-            <ContentTemplate>
-                <uc1:ucTextBox ID="ucTextBox" runat="server" TextMode="SingleLine" Width="350" />
+<%--        <asp:UpdatePanel runat="server">
+            <ContentTemplate>--%>
+                <uc1:ucTextBox ID="ucTextBox" runat="server" TextMode="SingleLine" Width="350" MaxLength ="20" />
                 <br />
                 <br />
 
-                <uc1:ucTextBox ID="ucTextBox3" AutoPostBack="true" runat="server" TextMode="MultiLine" Width="700" Height="150" />
+                <uc1:ucTextBox ID="ucTextBox3" AutoPostBack="true" runat="server" TextMode="MultiLine" Width="700" Height="150" MaxLength ="200" />
 
                 <br />
                 <br />
-                <uc1:ucTextBox ID="ucTextBox1" AutoPostBack="false" runat="server" TextMode="MultiLine" Width="700" Height="150" />
+                <uc1:ucTextBox ID="ucTextBox1" AutoPostBack="false" runat="server" TextMode="MultiLine" Width="700" Height="150" MaxLength ="200" />
                 <br />
                 <br />
 
-            </ContentTemplate>
-        </asp:UpdatePanel>
+<%--            </ContentTemplate>
+        </asp:UpdatePanel>--%>
 
 
 
