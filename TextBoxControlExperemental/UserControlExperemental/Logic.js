@@ -15,7 +15,7 @@
 //}
 
 function txtUp(self) {
-    
+
     replaceCommandChars(self);
     //replaceSpecialChars(self);
 
@@ -82,22 +82,23 @@ function txtCounter(self) {
 
     var maxlimit = self.maxLength
 
-    var strIn = self.value;
-    var strOut = "";
-    var countBytes = 0;
+    var strin = self.value.split('');;
+    var strout = "";
+    var count = 0;
 
-    for (i = 0; i <= strIn.length; i++) {
-
-        if (strIn.charCodeAt(i) < 256) {
-            countBytes += 1;
+    for (i = 0; i <= strin.length; i++) {
+        var ch = strin[i];
+        if (ch.charCodeAt(i) < 256) {
+            count += 1;
         } else {
-            countBytes += 2;
+            count += 2;
         }
 
-        if (countBytes <= maxlimit - strOut.split(/\r?\n/).length + 1) {
-            strOut += strIn.charAt(i);
-        } else {
-            self.value = strOut;
+        if (count <= maxlimit - strout.split(/\r?\n/).length + 1) {
+            strout += ch;
+        }
+        else {
+            self.value = strout;
             return false;
         }
         return true;
@@ -137,6 +138,7 @@ function txtPaste(self) {
     let paste = (event.clipboardData || window.clipboardData).getData('text');
     self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
     txtUp(self);
+    txtCounter(self);
     event.preventDefault();
     return true;
 }

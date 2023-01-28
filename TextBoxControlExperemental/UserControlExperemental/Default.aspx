@@ -18,8 +18,8 @@
 
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-<%--        <asp:UpdatePanel runat="server">
-            <ContentTemplate>--%>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
                 <uc1:ucTextBox ID="ucTextBox" runat="server" TextMode="SingleLine" Width="350" MaxLength ="20" />
                 <br />
                 <br />
@@ -32,8 +32,8 @@
                 <br />
                 <br />
 
-<%--            </ContentTemplate>
-        </asp:UpdatePanel>--%>
+            </ContentTemplate>
+        </asp:UpdatePanel>
 
 
 
