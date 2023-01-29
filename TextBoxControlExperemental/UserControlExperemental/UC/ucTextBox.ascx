@@ -47,7 +47,7 @@
         word-wrap: keep-all;
         font-size: medium;
         overflow-x: hidden;
-        overflow-y: hidden;
+        overflow-y: auto;
         text-align: left;
         cursor: none;
     }

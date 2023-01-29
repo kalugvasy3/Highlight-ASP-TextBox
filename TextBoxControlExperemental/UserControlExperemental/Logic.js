@@ -21,10 +21,6 @@ function txtUp(self) {
 
     var strtxt = self.value;
 
-    //if (self.clientHeight <= 25) {
-    //    strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
-    //}
-
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
     div.innerHTML = '';
 
@@ -38,7 +34,7 @@ function txtUp(self) {
         var ch1 = ch;
         if (ch == '>' || ch == '<' || ch == '&' || ch == '/') // control characters
         {
-            ch1 = '*'
+            ch1 = '*';
         }
 
         if (isCharNotValid(ch)) //wrong characters
@@ -74,10 +70,8 @@ function replaceCommandChars(self) {
     const regex = /\t/ig;
     str = str.replaceAll(regex, '    ');
 
-    self.value = str.normalize("NFC");
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-
-
+    self.value = str; //.normalize("NFC");
+    //// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
     return false;
 }
 
@@ -92,13 +86,16 @@ function txtCounter(self) {
         var ch = strIn[i];
 
         if (ch.charCodeAt() < 256) {
-            count += 1; 
+            count += 1;
         } else {
             count += 2;
         }
 
-        if (count > self.maxLength)
-        {
+        if (ch == '\n') {
+            count += 1;
+        } 
+
+        if (count > self.maxLength) {
             break;
         }
         strOut += ch;
@@ -120,7 +117,8 @@ function txtOnScroll(self) {
     var div = self.parentElement.childNodes[1];// name must be build dynamicaly
     div.scrollTop = self.scrollTop;
     div.scrollLeft = self.scrollLeft;
-    txtUp(self);
+
+    txtOnScroll(self);
     return false;
 }
 
