@@ -278,8 +278,8 @@
     <asp:TextBox ID="txtUC" runat="server"
         Style="resize: none"
         class="absolute transporentbackground "
-        onpaste="setTimeout(txtPaste(this))"
-        onkeydown="txtUp(this)"
+        onpaste="txtPaste(this)"
+
         onkeyup="txtUp(this)"
         onscroll="txtOnScroll(this)"
         onblur="txtOnBlur(this)"

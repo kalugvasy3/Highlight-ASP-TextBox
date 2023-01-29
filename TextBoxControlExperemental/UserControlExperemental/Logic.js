@@ -21,9 +21,9 @@ function txtUp(self) {
 
     var strtxt = self.value;
 
-    if (self.clientHeight <= 25) {
-        strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
-    }
+    //if (self.clientHeight <= 25) {
+    //    strtxt = strtxt.replaceAll(/(\r\n|\n|\r|\n\r)/ig, ' ');
+    //}
 
     var div = self.parentElement.childNodes[1]; // It will be "divCloneTxt". 
     div.innerHTML = '';
@@ -55,7 +55,7 @@ function txtUp(self) {
         }
     }
 
-    if (self.clientHeight > 25) {
+    if (strtxt.match(/(\r\n|\n|\r|\n\r)/ig)) {
         div.innerHTML = strdiv.replaceAll(/(\r\n|\n|\r|\n\r)/ig, '<br/>') + '<br/><br/>';
     } else {
         div.innerHTML = strdiv;
@@ -69,40 +69,43 @@ function txtUp(self) {
 
 
 function replaceCommandChars(self) {
+    txtCounter(self);
     str = self.value;
     const regex = /\t/ig;
     str = str.replaceAll(regex, '    ');
-    self.value = str.normalize("NFC").trimEnd();
+
+    self.value = str.normalize("NFC");
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+
+
     return false;
 }
 
 // multiline textarea max length
 function txtCounter(self) {
 
-    var maxlimit = self.maxLength
-
-    var strin = self.value.split('');;
-    var strout = "";
+    var strIn = self.value.split('');
+    var strOut = "";
     var count = 0;
 
-    for (i = 0; i <= strin.length; i++) {
-        var ch = strin[i];
-        if (ch.charCodeAt(i) < 256) {
-            count += 1;
+    for (i = 0; i < strIn.length; i++) {
+        var ch = strIn[i];
+
+        if (ch.charCodeAt() < 256) {
+            count += 1; 
         } else {
             count += 2;
         }
 
-        if (count <= maxlimit - strout.split(/\r?\n/).length + 1) {
-            strout += ch;
+        if (count > self.maxLength)
+        {
+            break;
         }
-        else {
-            self.value = strout;
-            return false;
-        }
-        return true;
+        strOut += ch;
     }
+
+    self.value = strOut;
+    return false;
 }
 
 function isCharNotValid(ch) {
@@ -138,7 +141,7 @@ function txtPaste(self) {
     let paste = (event.clipboardData || window.clipboardData).getData('text');
     self.setRangeText(paste, self.selectionStart, self.selectionEnd, "end");
     txtUp(self);
-    txtCounter(self);
+
     event.preventDefault();
     return true;
 }

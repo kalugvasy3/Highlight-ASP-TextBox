@@ -81,6 +81,7 @@ Public Class ucTextBox
         Set(value As Integer)
             _MaxLength = value
             txtUC.MaxLength = value
+            txtUC.Attributes.Add("maxLength", txtUC.MaxLength.ToString())
         End Set
     End Property
 
